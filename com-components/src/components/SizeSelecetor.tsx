@@ -2,8 +2,8 @@ import type { FC } from "react";
 import React from "react";
 
 const possibleSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
-const possibleColors = ['Red', 'Blue', 'Green']
-const possibleGen = ['Men', 'Women']
+const possibleColors = ['Rojo', 'Azul', 'Verde']
+const possibleGen = ['Hombre', 'Mujer']
 
 
 interface Props {

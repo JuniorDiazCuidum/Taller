@@ -7,19 +7,19 @@ interface Props {
   selectedGen: string;
 }
 
-const COLORS = ["Red", "Blue", "Green"];
+const COLORS = ["Rojo", "Azul", "Verde"];
 
 /* Images from ropa.txt — keyed by "Gen-Color" */
 const IMAGE_MAP: Record<string, string> = {
-  // ── Men ──
-  "Men-Red":   "https://www.bolf.es/hpeciai/7be13dea291df4e30dcaa466e804c58b/spa_pl_Camisa-elegante-de-manga-larga-para-hombre-rojo-Bolf-4704-43546_3.jpg",
-  "Men-Blue":  "https://www.bolf.es/hpeciai/f439beeb97f8e6defa2e45a395e4956a/spa_pl_Camisa-elegante-de-manga-larga-para-hombre-azul-real-Bolf-3725-17649_2.jpg",
-  "Men-Green": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvFkL-fceLNg1AQ9_MB3LtRO8OXoX2ctUrMQ&s",
+  // ── Hombre ──
+  "Hombre-Rojo":  "https://www.bolf.es/hpeciai/7be13dea291df4e30dcaa466e804c58b/spa_pl_Camisa-elegante-de-manga-larga-para-hombre-rojo-Bolf-4704-43546_3.jpg",
+  "Hombre-Azul":  "https://www.bolf.es/hpeciai/f439beeb97f8e6defa2e45a395e4956a/spa_pl_Camisa-elegante-de-manga-larga-para-hombre-azul-real-Bolf-3725-17649_2.jpg",
+  "Hombre-Verde": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvFkL-fceLNg1AQ9_MB3LtRO8OXoX2ctUrMQ&s",
 
-  // ── Women ──
-  "Women-Red":   "https://7camicie.com/cdn/shop/products/CDR_1D_BD_2PS0002UNR000_6_c4da590a-a98a-4731-b7ba-25d950dc283a.jpg?v=1753453000",
-  "Women-Blue":  "https://m.media-amazon.com/images/I/61qBpOyzREL._AC_UF894,1000_QL80_.jpg",
-  "Women-Green": "https://m.media-amazon.com/images/I/71YnoPpExkL._AC_UY1000_.jpg",
+  // ── Mujer ──
+  "Mujer-Rojo":  "https://7camicie.com/cdn/shop/products/CDR_1D_BD_2PS0002UNR000_6_c4da590a-a98a-4731-b7ba-25d950dc283a.jpg?v=1753453000",
+  "Mujer-Azul":  "https://m.media-amazon.com/images/I/61qBpOyzREL._AC_UF894,1000_QL80_.jpg",
+  "Mujer-Verde": "https://m.media-amazon.com/images/I/71YnoPpExkL._AC_UY1000_.jpg",
 };
 
 const COLOR_DATA: Record<
@@ -33,25 +33,25 @@ const COLOR_DATA: Record<
     colorHex: string;
   }
 > = {
-  Red: {
+  Rojo: {
     name: "Camiseta Roja Classic",
     description:
       "Estilo urbano y atrevido. 100% algodón peinado de alta densidad, corte recto que se adapta a cualquier complexión. Lavable a máquina.",
     basePrice: 22.99,
-    badge: "Best Seller",
+    badge: "Más Vendido",
     accent: "#b91c1c",
     colorHex: "#ef4444",
   },
-  Blue: {
+  Azul: {
     name: "Camiseta Ocean Blue",
     description:
       "Frescura y estilo en uno. Tejido jersey suave con tecnología anti-sudor, ideal para uso diario o actividad física ligera.",
     basePrice: 24.99,
-    badge: "New Arrival",
+    badge: "Nueva Llegada",
     accent: "#1d4ed8",
     colorHex: "#3b82f6",
   },
-  Green: {
+  Verde: {
     name: "Camiseta Nature Line",
     description:
       "Comprometida con el planeta. Fabricada con algodón orgánico certificado GOTS. Tinte ecológico que no destiñe. Edición limitada.",
@@ -73,17 +73,17 @@ const SIZE_SURCHARGE: Record<string, number> = {
 };
 
 const SIZE_LABEL: Record<string, string> = {
-  XS: "Extra Small",
-  S: "Small",
-  M: "Medium",
-  L: "Large",
-  XL: "Extra Large",
-  XXL: "Double XL",
+  XS: "Extra Pequeña",
+  S: "Pequeña",
+  M: "Mediana",
+  L: "Grande",
+  XL: "Extra Grande",
+  XXL: "Doble XL",
 };
 
 const GEN_LABEL: Record<string, string> = {
-  Men: "Hombre",
-  Women: "Mujer",
+  Hombre: "Hombre",
+  Mujer: "Mujer",
 };
 
 export const ProductCarousel: FC<Props> = ({
@@ -141,9 +141,9 @@ export const ProductCarousel: FC<Props> = ({
 
   const color = COLORS[currentIndex];
   const data = COLOR_DATA[color];
-  const genKey = selectedGen === "none" ? "Men" : selectedGen;
+  const genKey = selectedGen === "none" ? "Hombre" : selectedGen;
   const imageUrl =
-    IMAGE_MAP[`${genKey}-${color}`] ?? IMAGE_MAP[`Men-${color}`];
+    IMAGE_MAP[`${genKey}-${color}`] ?? IMAGE_MAP[`Hombre-${color}`];
   const sizeLabel = SIZE_LABEL[selectedSize] || selectedSize;
   const genLabel = GEN_LABEL[selectedGen] || selectedGen;
   const surcharge = SIZE_SURCHARGE[selectedSize] ?? 0;
@@ -211,7 +211,7 @@ export const ProductCarousel: FC<Props> = ({
           <button
             key={`dot-${c}`}
             onClick={() => navigateTo(i)}
-            aria-label={`Go to ${c}`}
+            aria-label={`Ir a ${c}`}
             style={{
               ...s.dot,
               width: i === currentIndex ? "28px" : "8px",
@@ -299,18 +299,19 @@ const s: Record<string, React.CSSProperties> = {
   },
   imageWrapper: {
     position: "relative",
-    width: "420px",
-    height: "320px",
-    flexShrink: 0,
+    width: "100%",
+    aspectRatio: "420 / 320",
     background: "#f3f4f6",
     overflow: "hidden",
   },
   image: {
-    width: "420px",
-    height: "320px",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
     objectFit: "cover",
     display: "block",
-    flexShrink: 0,
   },
   badge: {
     position: "absolute",
