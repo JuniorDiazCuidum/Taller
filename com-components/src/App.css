@@ -32,6 +32,8 @@ html, body {
   --price-color: #67e8f9;
   --line-total-color: #f9a8d4;
   --coupon-bg: rgba(192,132,252,0.08);
+  --ad-width: 240px;
+  --ad-height: 520px;
 }
 
 html, body {
@@ -575,6 +577,53 @@ html, body {
   &::after {
     right: 0;
     border-right-color: var(--border);
+  }
+}
+
+/* --- Left announcement (fixed) --- */
+.page-ad {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--ad-width);
+  height: var(--ad-height);
+  padding: 16px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 18px 48px rgba(2,6,23,0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1400;
+}
+.page-ad .ad-close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--muted-text);
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.page-ad .ad-content { text-align: center; }
+.page-ad h4 { margin: 8px 0 6px; font-size: 18px; color: #fff; }
+.page-ad p { margin: 0 0 12px; color: var(--muted-2); }
+.ad-cta { background: linear-gradient(90deg,#c084fc,#818cf8); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: 700; }
+.ad-message { text-align: center; padding: 8px; color: #f8fafc; font-weight: 700; }
+
+@media (max-width: 900px) {
+  .page-ad { display: none; }
+}
+
+@media (min-width: 901px) {
+  /* Reserve space on the left for the ad so it doesn't overlap the centered content */
+  .page-wrapper {
+    padding-left: calc(var(--ad-width) + 48px);
   }
 }
 

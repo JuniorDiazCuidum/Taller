@@ -1,6 +1,6 @@
 import { ColorSelector, SizeSelector, GenSelector } from './components/SizeSelecetor'
 import { ProductCarousel } from './components/ProductCarousel'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
 type CartItem = {
@@ -19,6 +19,27 @@ function App() {
   const [currentGen, setCurrentGen] = useState('none')
   const [cart, setCart] = useState<CartItem[]>([])
   const [showCart, setShowCart] = useState(false)
+  const [showAdContent, setShowAdContent] = useState(true)
+  const [showAdMessage, setShowAdMessage] = useState(false)
+  const adTimeoutRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (adTimeoutRef.current) {
+        window.clearTimeout(adTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const closeAd = () => {
+    setShowAdContent(false)
+    setShowAdMessage(true)
+    if (adTimeoutRef.current) window.clearTimeout(adTimeoutRef.current)
+    adTimeoutRef.current = window.setTimeout(() => {
+      setShowAdMessage(false)
+      setShowAdContent(true)
+    }, 5000)
+  }
   const [coupon, setCoupon] = useState('')
   const [appliedCoupon, setAppliedCoupon] = useState('')
 
@@ -113,6 +134,21 @@ function App() {
           </div>
         </div>
 
+      </div>
+
+      {/* Anuncio lateral fijo */}
+      <div className="page-ad" role="complementary" aria-hidden={!(showAdContent || showAdMessage)}>
+        <button className="ad-close-btn" onClick={closeAd} aria-label="Cerrar anuncio">✕</button>
+        {showAdContent && (
+          <div className="ad-content">
+            <h4>Oferta especial</h4>
+            <p>40% dto en camisetas seleccionadas</p>
+            <button className="ad-cta">Ver oferta</button>
+          </div>
+        )}
+        {showAdMessage && (
+          <div className="ad-message">No se te mostrará más este anuncio</div>
+        )}
       </div>
 
       {showCart && (
